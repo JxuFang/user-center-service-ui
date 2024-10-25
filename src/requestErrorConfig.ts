@@ -111,7 +111,7 @@ export const errorConfig: RequestConfig = {
         success: code === 0
       } as ResponseStructure;
       console.log("#######: "+JSON.stringify(response.data))
-      return response;
+      return response.data;
     },
   ],
 };
