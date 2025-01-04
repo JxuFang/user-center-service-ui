@@ -22,9 +22,9 @@ declare namespace API {
     currentAuthority?: string;
   };
 
-  type BaseResponse = {
+  type BaseResponse<T> = {
     code: number;
-    data: any;
+    data: T;
     message: string;
     description: string;
   }

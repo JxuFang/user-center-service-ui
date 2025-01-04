@@ -19,12 +19,12 @@ export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<API.BaseResponse<API.CurrentUser> | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
       return await queryCurrentUser({
-        skipErrorHandler: true,
+        skipErrorHandler: true, 
       });
     } catch (error) {
       history.push(loginPath);
@@ -35,7 +35,8 @@ export async function getInitialState(): Promise<{
   const { location } = history;
 
   if (!WHITELIST.includes(location.pathname)) {
-    const currentUser = await fetchUserInfo();
+    const response = await fetchUserInfo();
+    const currentUser = response.data;
     return {
       currentUser,
       fetchUserInfo,
@@ -126,6 +127,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ...initialState?.settings,
   };
 };
+// export const axiosConfig: AxiosRequestConfig ={
+//   baseURL: process.env.UMI_ENV === 'prod' ? 'http://'
+// }
+
 
 /**
  * @name request 配置，可以配置错误处理
@@ -133,5 +138,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request = {
+  // axiosConfig,
   ...errorConfig,
 };

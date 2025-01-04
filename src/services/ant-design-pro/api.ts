@@ -4,7 +4,7 @@ import { request } from '@umijs/max';
 
 /** 获取当前的用户 GET /api/user/current */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request('/api/user/current', {
+  return request<API.BaseResponse<API.CurrentUser>>('/api/user/current', {
     method: 'GET',
     ...(options || {}),
   });
@@ -20,7 +20,7 @@ export async function outLogin(options?: { [key: string]: any }) {
 
 /** 登录接口 POST /api/user/login */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.BaseResponse>('/api/user/login', {
+  return request<API.BaseResponse<any>>('/api/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
